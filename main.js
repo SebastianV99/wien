@@ -30,7 +30,7 @@ let layerControl = L.control.layers({
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
     "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
 }, {
-    "Vienna Sightseeing Haltestellen": themaLayer.stops, 
+    "Vienna Sightseeing Haltestellen": themaLayer.stops,
     "Vienna Sightseeing Linien": themaLayer.lines,
     "Fußgängerzonen": themaLayer.zones,
     "Sehenswürdigkeiten": themaLayer.sites
@@ -50,38 +50,38 @@ async function showStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.stops);
-   // console.log(response, jsondata)
+    // console.log(response, jsondata)
 }
 
 async function showLines(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.lines);
-   // console.log(response, jsondata)
+    // console.log(response, jsondata)
 }
 
 async function showSites(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata,{
-        onEachFeature: function(feature, layer){
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer) {
             let prop = feature.properties;
             layer.bindPopup(`
             <img src ="${prop.THUMBNAIL}" alt= "*" >
                 <h4> <a href ="${prop.WEITERE_INF}">${prop.NAME} </a></h4>
-
+<address> ${prop.ADRESSE} </adress>
                 `);
             console.log(feature.properties, prop.NAME);
         }
     }).addTo(themaLayer.sites);
-   // console.log(response, jsondata)
+    // console.log(response, jsondata)
 }
 
 async function showZones(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.zones);
-   // console.log(response, jsondata)
+    // console.log(response, jsondata)
 }
 
 showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json ");
