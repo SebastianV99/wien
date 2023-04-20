@@ -14,9 +14,9 @@ let map = L.map("map").setView([
 
 //thematische Layer
 let themaLayer = {
-    stops: L.featureGroup().addTo(map),
-    lines: L.featureGroup().addTo(map),
-    zones: L.featureGroup().addTo(map),
+    stops: L.featureGroup(),
+    lines: L.featureGroup(),
+    zones: L.featureGroup(),
     sites: L.featureGroup().addTo(map)
 }
 
@@ -50,28 +50,28 @@ async function showStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.stops);
-    console.log(response, jsondata)
+   // console.log(response, jsondata)
 }
 
 async function showLines(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.lines);
-    console.log(response, jsondata)
+   // console.log(response, jsondata)
 }
 
 async function showSites(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.sites);
-    console.log(response, jsondata)
+   // console.log(response, jsondata)
 }
 
 async function showZones(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.zones);
-    console.log(response, jsondata)
+   // console.log(response, jsondata)
 }
 
 showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json ");
