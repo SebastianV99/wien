@@ -101,7 +101,17 @@ async function showSites(url) {
 async function showZones(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.zones);
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer) {
+            let prop = feature.properties;
+            layer.bindPopup(`
+            <h4><b> Fußgängerzone ${prop.ADRESSE} </b></h4>
+            <p> <i class="fa-sharp fa-regular fa-clock"></i> ${prop.ZEITRAUM} <br> <br>
+            <i class="fa-solid fa-circle-info"></i> ${prop.AUSN_TEXT}</p>
+                `);
+            console.log(prop);
+        }
+    }).addTo(themaLayer.zones);
     // console.log(response, jsondata)
 }
 
