@@ -49,14 +49,35 @@ L.control.scale({
 async function showStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.stops);
-    // console.log(response, jsondata)
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){
+        let prop = feature.properties;
+        layer.bindPopup(`
+        <h4> <i class = "fa-solid fa-bus"></i> ${prop.LINE_NAME}</h4>
+        <p> ${prop.STAT_ID} ${prop.STAT_NAME} </p>
+            `);
+        console.log(prop)
+    }
+}).addTo(themaLayer.stops);
+//console.log(response, jsondata)
 }
 
 async function showLines(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.lines);
+    L.geoJSON(jsondata, {
+        onEachFeature: function (feature, layer){
+        let prop = feature.properties;
+        layer.bindPopup(`
+        <h4> <i class = "fa-solid fa-bus"></i> ${prop.LINE_NAME}</h4>
+        <p> <i class = "fa-regular fa-circle-stop"></i> ${prop.FROM_NAME} <br>
+        <i class="fa-sharp fa-solid fa-down-long"></i> <br>
+        <i class = "fa-regular fa-circle-stop"></i> ${prop.TO_NAME} </p>
+            `);
+        console.log(prop)
+    }
+}).addTo(themaLayer.lines);
+
     // console.log(response, jsondata)
 }
 
