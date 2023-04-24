@@ -37,7 +37,8 @@ let layerControl = L.control.layers({
 
 }).addTo(map);
 
-
+// Fullscreen Plug-In
+map.addControl(new L.Control.Fullscreen());
 
 
 // Maßstab
