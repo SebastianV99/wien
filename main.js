@@ -66,6 +66,17 @@ async function showStops(url) {
 async function showLines(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
+    let lineNames ={};
+    let lineColors = {
+        {
+            "1": "Red Line",
+            "2": "Yellow Line",
+            "3": "Blue Line",
+            "4": "Green Line",
+            "5": "Grey Line",
+            "6": "Orange Line"
+        }
+    }
     L.geoJSON(jsondata, {
         onEachFeature: function (feature, layer) {
             let prop = feature.properties;
@@ -75,10 +86,11 @@ async function showLines(url) {
         <i class="fa-sharp fa-solid fa-down-long"></i> <br>
         <i class = "fa-regular fa-circle-stop"></i> ${prop.TO_NAME} </p>
             `);
-           // console.log(prop)
+            lineNames[prop.LINE_ID] = prop.LINE_NAME;
+           console.log(lineNames)
         }
     }).addTo(themaLayer.lines);
-
+    
     // console.log(response, jsondata)
 }
 
