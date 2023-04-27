@@ -51,6 +51,16 @@ async function showStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
+        pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: 'icons/busstop.png',
+                    //iconSize: [32, 37],
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
+                })
+            });
+        },
         onEachFeature: function (feature, layer) {
             let prop = feature.properties;
             layer.bindPopup(`
