@@ -17,7 +17,8 @@ let themaLayer = {
     stops: L.featureGroup(),
     lines: L.featureGroup(),
     zones: L.featureGroup(),
-    sites: L.featureGroup().addTo(map)
+    sites: L.featureGroup().addTo(map),
+    hotels: L.featureGroup(),
 }
 
 // Hintergrundlayer
@@ -33,7 +34,8 @@ let layerControl = L.control.layers({
     "Vienna Sightseeing Haltestellen": themaLayer.stops,
     "Vienna Sightseeing Linien": themaLayer.lines,
     "Fußgängerzonen": themaLayer.zones,
-    "Sehenswürdigkeiten": themaLayer.sites
+    "Sehenswürdigkeiten": themaLayer.sites,
+    "Hotels": themaLayer.hotels
 
 }).addTo(map);
 
@@ -51,7 +53,7 @@ async function showStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: `icons/busstop_${feature.properties.LINE_ID}.png`,
@@ -115,7 +117,7 @@ async function showSites(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: 'icons/ICON.png',
@@ -135,6 +137,37 @@ async function showSites(url) {
             // console.log(feature.properties, prop.NAME);
         }
     }).addTo(themaLayer.sites);
+    // console.log(response, jsondata)
+}
+
+async function showHotels(url) {
+    let response = await fetch(url);
+    let jsondata = await response.json();
+    L.geoJSON(jsondata, {
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: 'icons/hotel.png',
+                    //iconSize: [32, 37],
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
+                })
+            });
+        },
+        onEachFeature: function (feature, layer) {
+            let prop = feature.properties;
+            layer.bindPopup(`
+                <h3> ${prop.BETRIEB}</h3>
+                <h4> ${prop.BETRIEBSART_TXT} und ${prop.KATEGORIE_TXT} </h4>
+                <hr>
+                Addr.:${prop.ADRESSE} <br>
+                Tel.: <a href ="tel:${prop.KONTAKT_TEL}" >${prop.KONTAKT_TEL} </a> <br>
+                <a href="mailto:${prop.KONTAKT_EMAIL}"> ${prop.KONTAKT_EMAIL} </a> <br>
+                <a href="${prop.WEBLINK1}"> ${prop.WEBLINK1}</a>
+                `);
+            // console.log(feature.properties, prop.NAME);
+        }
+    }).addTo(themaLayer.hotels);
     // console.log(response, jsondata)
 }
 
@@ -168,4 +201,4 @@ showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
 showSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
-
+showHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
