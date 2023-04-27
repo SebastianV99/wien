@@ -10,14 +10,14 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map("map").setView([
     stephansdom.lat, stephansdom.lng
-], 12);
+], 15);
 
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup(),
-    lines: L.featureGroup(),
+    lines: L.featureGroup().addTo(map),
     zones: L.featureGroup(),
-    sites: L.featureGroup().addTo(map)
+    sites: L.featureGroup()
 }
 
 // Hintergrundlayer
@@ -57,7 +57,7 @@ async function showStops(url) {
         <h4> <i class = "fa-solid fa-bus"></i> ${prop.LINE_NAME}</h4>
         <p> ${prop.STAT_ID} ${prop.STAT_NAME} </p>
             `);
-            console.log(prop)
+           // console.log(prop)
         }
     }).addTo(themaLayer.stops);
     //console.log(response, jsondata)
@@ -75,7 +75,7 @@ async function showLines(url) {
         <i class="fa-sharp fa-solid fa-down-long"></i> <br>
         <i class = "fa-regular fa-circle-stop"></i> ${prop.TO_NAME} </p>
             `);
-            console.log(prop)
+           // console.log(prop)
         }
     }).addTo(themaLayer.lines);
 
@@ -93,7 +93,7 @@ async function showSites(url) {
                 <h4> <a href ="${prop.WEITERE_INF}">${prop.NAME} </a></h4>
 <address> ${prop.ADRESSE} </adress>
                 `);
-            console.log(feature.properties, prop.NAME);
+           // console.log(feature.properties, prop.NAME);
         }
     }).addTo(themaLayer.sites);
     // console.log(response, jsondata)
@@ -110,7 +110,7 @@ async function showZones(url) {
             <p> <i class="fa-sharp fa-regular fa-clock"></i> ${prop.ZEITRAUM ||"dauerhaft"} <br> <br>
             <i class="fa-solid fa-circle-info"></i> ${prop.AUSN_TEXT || "keine Ausnahmen"}</p>
                 `);
-            console.log(prop);
+           // console.log(prop);
         }
     }).addTo(themaLayer.zones);
     // console.log(response, jsondata)
