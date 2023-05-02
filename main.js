@@ -154,9 +154,10 @@ async function showHotels(url) {
                 })
             });
         },
+       
         onEachFeature: function (feature, layer) {
-            let prop = feature.properties;
-            layer.bindPopup(`
+        let prop = feature.properties;
+        layer.bindPopup(`
                 <h3> ${prop.BETRIEB}</h3>
                 <h4> ${prop.BETRIEBSART_TXT} und ${prop.KATEGORIE_TXT} </h4>
                 <hr>
@@ -165,15 +166,10 @@ async function showHotels(url) {
                 <a href="mailto:${prop.KONTAKT_EMAIL}"> ${prop.KONTAKT_EMAIL} </a> <br>
                 <a href="${prop.WEBLINK1}"> ${prop.WEBLINK1}</a>
                 `);
-            // console.log(feature.properties, prop.NAME);
-            //https://mapicons.mapsmarker.com/markers/restaurants-bars/hotels/hotel/
-            // as if, ICONS für hotel if prop.KATEGORIE:TXT is ...
-            // if (prop.KATEGORIE_TXT = 3* 
-            
-            )
         }
-    }).addTo(themaLayer.hotels);
-    // console.log(response, jsondata)
+}).addTo(themaLayer.hotels);
+
+    //console.log(response, jsondata)
 }
 
 async function showZones(url) {
