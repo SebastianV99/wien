@@ -212,7 +212,6 @@ async function showHotels(url) {
         }
     }).addTo(themaLayer.hotels);
 
-   
 }
 
 async function showZones(url) {
