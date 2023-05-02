@@ -145,6 +145,7 @@ async function showHotels(url) {
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
         pointToLayer: function (feature, latlng) {
+            if (feature.properties.BETRIEBSART_TXT === "nicht kategorisiert") {
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: 'icons/hotel.png',
@@ -152,7 +153,48 @@ async function showHotels(url) {
                     iconAnchor: [16, 37],
                     popupAnchor: [0, -37],
                 })
-            });
+            })
+            } else if (feature.properties.BETRIEBSART_TXT === '1*') {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel_1star.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            })
+            } else if (feature.properties.BETRIEBSART_TXT === '2*') {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel_2stars.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            })
+            } else if (feature.properties.BETRIEBSART_TXT === '3*') {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel_3stars.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            })
+            } else if (feature.properties.BETRIEBSART_TXT === '4*') {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel_4stars.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            })
+            } else {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel_5stars.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            })
+            };
         },
        
         onEachFeature: function (feature, layer) {
@@ -167,9 +209,9 @@ async function showHotels(url) {
                 <a href="${prop.WEBLINK1}"> ${prop.WEBLINK1}</a>
                 `);
         }
-}).addTo(themaLayer.hotels);
+    }).addTo(themaLayer.hotels);
 
-    //console.log(response, jsondata)
+   //console.log(response, jsondata)
 }
 
 async function showZones(url) {
