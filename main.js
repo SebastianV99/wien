@@ -134,7 +134,7 @@ async function showSites(url) {
                 <h4> <a href ="${prop.WEITERE_INF}">${prop.NAME} </a></h4>
 <address> ${prop.ADRESSE} </adress>
                 `);
-            // console.log(feature.properties, prop.NAME);
+             //console.log(feature.properties);
         }
     }).addTo(themaLayer.sites);
     // console.log(response, jsondata)
@@ -145,58 +145,59 @@ async function showHotels(url) {
     let jsondata = await response.json();
     L.geoJSON(jsondata, {
         pointToLayer: function (feature, latlng) {
-            if (feature.properties.BETRIEBSART_TXT === "nicht kategorisiert") {
+            if (feature.properties.KATEGORIE_TXT === "nicht kategorisiert") {
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl: 'icons/hotel.png',
+                    iconUrl: 'icons/hotel_0star.png',
                     //iconSize: [32, 37],
                     iconAnchor: [16, 37],
                     popupAnchor: [0, -37],
                 })
             })
-            } else if (feature.properties.BETRIEBSART_TXT === '1*') {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel_1star.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+            }
+            else if (feature.properties.KATEGORIE_TXT === '1*') {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_1star.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
                 })
-            })
-            } else if (feature.properties.BETRIEBSART_TXT === '2*') {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel_2stars.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+                } else if (feature.properties.KATEGORIE_TXT === '2*') {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_2stars.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
                 })
-            })
-            } else if (feature.properties.BETRIEBSART_TXT === '3*') {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel_3stars.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+                } else if (feature.properties.KATEGORIE_TXT === '3*') {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_3stars.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
                 })
-            })
-            } else if (feature.properties.BETRIEBSART_TXT === '4*') {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel_4stars.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+                } else if (feature.properties.KATEGORIE_TXT === '4*') {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_4stars.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
                 })
-            })
-            } else {
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel_5stars.png",
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
+                } else {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_5stars.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
                 })
-            })
-            };
+                };
+                
         },
-       
         onEachFeature: function (feature, layer) {
         let prop = feature.properties;
         layer.bindPopup(`
@@ -211,7 +212,7 @@ async function showHotels(url) {
         }
     }).addTo(themaLayer.hotels);
 
-   //console.log(response, jsondata)
+   
 }
 
 async function showZones(url) {
@@ -239,6 +240,7 @@ async function showZones(url) {
     }).addTo(themaLayer.zones);
     // console.log(response, jsondata)
 }
+
 
 showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json ");
 showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
