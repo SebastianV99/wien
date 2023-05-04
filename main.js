@@ -12,6 +12,13 @@ let map = L.map("map").setView([
     stephansdom.lat, stephansdom.lng
 ], 15);
 
+//Minimap
+let osm2 = new L.tileLayer.provider("BasemapAT.grau");
+let  miniMap = new L.Control.MiniMap(osm2, {
+    toggleDisplay: true,
+    minimized: true
+}).addTo(map);
+
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup(),
@@ -44,7 +51,8 @@ let layerControl = L.control.layers({
 // Fullscreen Plug-In
 map.addControl(new L.Control.Fullscreen());
 
-
+//hash
+let hash = new L.Hash(map);
 // Maßstab
 L.control.scale({
     imperial: false,
